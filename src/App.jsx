@@ -19,6 +19,7 @@ function App() {
   const [showOptions, setShowOptions] = useState(false);
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
   const [showToDoList, setShowToDoList] = useState(false);
+  const [showChangeSetUp, setChangeSetUp] = useState(false);
 
   const drinks = [
     { id: "Coffee", image: coffee },
@@ -31,7 +32,7 @@ function App() {
   ];
 
   const handleClick = () => {
-    setShowOptions((prev) => !prev); // alterna entre true y false
+    setShowOptions((prev) => !prev);
   };
 
   const currentDrink = drinks.find((d) => d.id === background);
@@ -40,12 +41,12 @@ function App() {
       style={{
         margin: 0,
         padding: 0,
-        height: "100vh", // ocupa toda la ventana
+        height: "100vh",
         backgroundImage: currentDrink ? `url(${currentDrink.image})` : none,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
-        overflow: "hidden", // evita scroll
+        overflow: "hidden",
       }}
     >
       <div>
@@ -64,20 +65,34 @@ function App() {
             setShowToDoList(true);
             setShowOptions(false);
           }}
+          onOpenTimerSetUp={() => {
+            setChangeSetUp(true);
+            setShowOptions(false);
+          }}
         />
       )}
 
       {showToDoList && <ToDoList />}
 
-      <Timer showOptions={false} />
+      <Timer
+        showOptions={showOptions}
+        showToDoList={showToDoList}
+        showDrinkSelector={showDrinkSelector}
+        showChangeSetUp={showChangeSetUp}
+        onSetUpEnded={() => setChangeSetUp(false)}
+      />
 
       {showDrinkSelector && (
         <DrinkSelector
           drinks={drinks}
-          onClose={() => setShowDrinkSelector(false)}
+          onClose={() => {
+            setShowDrinkSelector(false);
+            setTimerSetUp(true);
+          }}
           onConfirm={(drinkId) => {
             setBackground(drinkId);
             setShowDrinkSelector(false);
+            setTimerSetUp(true);
           }}
         />
       )}
@@ -86,9 +101,10 @@ function App() {
 }
 
 const optionStyle = {
-  position: "fixed" /* Hace que quede fijo en la pantalla */,
-  right: "20px" /* Separado 20px del borde derecho */,
-  padding: "10px 20px",
+  position: "fixed",
+  right: "10px",
+  padding: "10px 10px",
+  margin: "10px",
   background: "transparent",
   border: "2px solid #2f2f2f",
   borderRadius: 8,

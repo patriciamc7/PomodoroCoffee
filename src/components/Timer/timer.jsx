@@ -1,13 +1,24 @@
 import { useState, useEffect } from "react"; //variables de estado y efecto para el temporizador
 
-function Timer({showOptions}) {
+function Timer({
+  showOptions,
+  showToDoList,
+  showDrinkSelector,
+  showChangeSetUp,
+  onSetUpEnded,
+}) {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [showSetUp, setShowSetUp] = useState(true);
 
   const [timeInput, setTimeInput] = useState("");
   const [task, setTask] = useState("");
 
+  const shouldShowSetUp =
+    !showOptions &&
+    !showToDoList &&
+    !showDrinkSelector &&
+    (!isRunning || showChangeSetUp);
+    
   const formatTime = (totalSeconds) => {
     const h = Math.floor(totalSeconds / 3600);
     const m = Math.floor((totalSeconds % 3600) / 60);
@@ -31,7 +42,6 @@ function Timer({showOptions}) {
   //Baja el tiempo hasta llegar a 0
   useEffect(() => {
     if (!isRunning || seconds <= 0) {
-      setShowSetUp(true);
       setTimeInput("");
       setTask("");
       setIsRunning(false);
@@ -63,13 +73,13 @@ function Timer({showOptions}) {
     if (total <= 0) return;
 
     setSeconds(total);
-    setShowSetUp(false);
     setIsRunning(true);
+    onSetUpEnded?.();
   };
 
   return (
     <>
-      {!showOptions && showSetUp && (
+      {shouldShowSetUp && (
         <div style={overlayStyle}>
           <div style={extraWindowStyle}>
             <p style={{ marginTop: 30, marginBottom: 0 }}>

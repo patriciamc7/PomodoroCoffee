@@ -1,16 +1,9 @@
-import { useState } from "react";
-
-import Timer from "../Timer/timer";
-
-function Settings({onOpenDrinkSelector, onOpenToDoList }) {
-  const [activeComponent, setActiveComponent] = useState(null);
-
+function Settings({ onOpenDrinkSelector, onOpenToDoList, onOpenTimerSetUp }) {
   return (
     <div style={settingsStyle}>
       <div>
-        <button style={buttonStyle} onClick={() => setActiveComponent("timer")}>
-          {" "}
-          Change Timer{" "}
+        <button style={buttonStyle} onClick={onOpenTimerSetUp}>
+          Change Timer
         </button>
       </div>
 
@@ -24,10 +17,6 @@ function Settings({onOpenDrinkSelector, onOpenToDoList }) {
         <button style={buttonStyle} onClick={onOpenToDoList}>
           Show To-Do List
         </button>
-      </div>
-
-      <div style={{ marginTop: 20 }}>
-        {activeComponent === "timer" && <Timer />}
       </div>
     </div>
   );
@@ -46,7 +35,7 @@ const settingsStyle = {
   outline: "none", // quita el borde de foco azul
   boxShadow: "none", // quita cualquier sombra
   justifyItems: "right",
-  paddingTop: 60,
+  paddingTop: 70,
 };
 
 const buttonStyle = {
