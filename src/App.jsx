@@ -4,6 +4,7 @@ import Timer from "./components/Timer/timer";
 import Settings from "./components/Settings/settings";
 import DrinkSelector from "./components/Drinks/drinkselector";
 import ToDoList from "./components/Tasks/todolist";
+import Player from "./components/Audio/player";
 
 import coffee from "./assets/coffee.png";
 import tea from "./assets/tea.png";
@@ -13,6 +14,11 @@ import cola from "./assets/cola.png";
 import matcha from "./assets/matcha.png";
 import strawberry from "./assets/strawberry.png";
 
+import lofi1 from "./assets/sounds/lofi1.mp3";
+import lofi2 from "./assets/sounds/lofi2.mp3";
+import lofi3 from "./assets/sounds/lofi3.mp3";
+import lofi4 from "./assets/sounds/lofi4.mp3";
+
 function App() {
   const [background, setBackground] = useState("Coffee");
 
@@ -20,6 +26,10 @@ function App() {
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
   const [showToDoList, setShowToDoList] = useState(false);
   const [showChangeSetUp, setChangeSetUp] = useState(false);
+
+  const [timerRunning, setTimerRunning] = useState(false);
+
+  const tracks = [lofi1, lofi2, lofi3, lofi4];
 
   const drinks = [
     { id: "Coffee", image: coffee },
@@ -80,6 +90,7 @@ function App() {
         showDrinkSelector={showDrinkSelector}
         showChangeSetUp={showChangeSetUp}
         onSetUpEnded={() => setChangeSetUp(false)}
+        onRunningChange={setTimerRunning}
       />
 
       {showDrinkSelector && (
@@ -87,15 +98,17 @@ function App() {
           drinks={drinks}
           onClose={() => {
             setShowDrinkSelector(false);
-            setTimerSetUp(true);
+            setChangeSetUp(true);
           }}
           onConfirm={(drinkId) => {
             setBackground(drinkId);
             setShowDrinkSelector(false);
-            setTimerSetUp(true);
+            setChangeSetUp(true);
           }}
         />
       )}
+
+      <Player tracks={tracks} running={timerRunning} />
     </div>
   );
 }

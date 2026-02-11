@@ -6,6 +6,7 @@ function Timer({
   showDrinkSelector,
   showChangeSetUp,
   onSetUpEnded,
+  onRunningChange,
 }) {
   const [seconds, setSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -18,7 +19,7 @@ function Timer({
     !showToDoList &&
     !showDrinkSelector &&
     (!isRunning || showChangeSetUp);
-    
+
   const formatTime = (totalSeconds) => {
     const h = Math.floor(totalSeconds / 3600);
     const m = Math.floor((totalSeconds % 3600) / 60);
@@ -38,6 +39,10 @@ function Timer({
 
     return `${h}:${m}:${s}`;
   };
+
+  useEffect(() => {
+    onRunningChange?.(isRunning);
+  }, [isRunning]);
 
   //Baja el tiempo hasta llegar a 0
   useEffect(() => {

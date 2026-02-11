@@ -1,0 +1,11 @@
+options mas visible -DONE
+cuando options se abre cerrar timer - DONE
+timer se enseñe al principio o si no esta seteado pero no cuando tiene otra pestaña abierta -DONE
+al cambiar timer no crear otra instancia, sino modificar el que ya esta
+no generar mas de un timer a la vez - DONE
+
+todo list:
+borrar elementos
+cerrar pestaña
+
+cambiar botones del reproductor y añadir efecto dibujado
