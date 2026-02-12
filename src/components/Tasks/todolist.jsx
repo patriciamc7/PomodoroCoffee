@@ -1,22 +1,22 @@
-import { useState } from "react"; //variables de estado y efecto para el temporizador
+import { useState } from "react";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
 
   const addTask = () => {
-    if (text.trim() === "") return; // No agregar tareas vacías
+    if (text.trim() === "") return;
 
     setTasks([
       ...tasks,
       {
-        id: crypto.randomUUID(), // Genera un ID único para cada tarea
+        id: crypto.randomUUID(),
         text,
-        done: false, // Estado de la tarea (completada o no)
+        done: false,
       },
     ]);
 
-    setText(""); // Limpiar el campo de texto después de agregar la tarea
+    setText("");
   };
 
   const toggleTask = (id) => {
@@ -56,7 +56,7 @@ function ToDoList() {
                     top: "50%",
                     left: "10%",
                     width: "80%",
-                    height: 3, // grosor de la línea
+                    height: 3,
                     backgroundColor: "#000000",
                     transform: "translateY(-50%)",
                     borderRadius: 1,

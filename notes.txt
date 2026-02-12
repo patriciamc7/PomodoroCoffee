@@ -9,3 +9,9 @@ borrar elementos
 cerrar pestaña
 
 cambiar botones del reproductor y añadir efecto dibujado
+sonido de timer cuando acaba
+
+limpiar código
+
+se abre timer cuando cambias bebidas
+fondo timer

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Timer from "./components/Timer/timer";
 import Settings from "./components/Settings/settings";
@@ -20,7 +20,9 @@ import lofi3 from "./assets/sounds/lofi3.mp3";
 import lofi4 from "./assets/sounds/lofi4.mp3";
 
 function App() {
-  const [background, setBackground] = useState("Coffee");
+  const [background, setBackground] = useState(() => {
+    return localStorage.getItem("drink") || "Strawberry Milk";
+  });
 
   const [showOptions, setShowOptions] = useState(false);
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
@@ -46,6 +48,11 @@ function App() {
   };
 
   const currentDrink = drinks.find((d) => d.id === background);
+
+  useEffect(() => {
+    localStorage.setItem("drink", background);
+  }, [background]);
+
   return (
     <div
       style={{

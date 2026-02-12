@@ -14,6 +14,6 @@ body {
 
 input, button, select, textarea {
   font-family: "Excalifont", sans-serif;
-  outline: none;     /* quita el borde azul al enfocar */
-  box-shadow: none;  /* quita sombras por defecto */
+  outline: none;
+  box-shadow: none; 
 }

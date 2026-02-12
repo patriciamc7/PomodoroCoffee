@@ -3,10 +3,17 @@ import { useEffect, useRef, useState } from "react";
 function Player({ tracks, running }) {
   const audioRef = useRef(null);
 
-  const [current, setCurrent] = useState(0);
   const [playing, setPlaying] = useState(false);
 
-  // reproducir / pausar según estado
+  const [current, setCurrent] = useState(() => {
+    const saved = localStorage.getItem("track");
+    return saved ? Number(saved) : 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("track", current);
+  }, [current]);
+
   useEffect(() => {
     if (!audioRef.current) return;
 

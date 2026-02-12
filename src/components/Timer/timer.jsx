@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"; //variables de estado y efecto para el temporizador
+import { useState, useEffect } from "react";
 
 function Timer({
   showOptions,
@@ -8,7 +8,15 @@ function Timer({
   onSetUpEnded,
   onRunningChange,
 }) {
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(() => {
+    const saved = localStorage.getItem("timerSeconds");
+    return saved ? Number(saved) : 0;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("timerSeconds", seconds);
+  }, [seconds]);
+
   const [isRunning, setIsRunning] = useState(false);
 
   const [timeInput, setTimeInput] = useState("");
@@ -44,7 +52,6 @@ function Timer({
     onRunningChange?.(isRunning);
   }, [isRunning]);
 
-  //Baja el tiempo hasta llegar a 0
   useEffect(() => {
     if (!isRunning || seconds <= 0) {
       setTimeInput("");
@@ -63,8 +70,8 @@ function Timer({
       });
     }, 1000);
 
-    return () => clearInterval(interval); // se limpia cada vez que se cierra la pagina
-  }, [isRunning, seconds]); //se llama al inicio y cada vez que cambia el estado de isRunning
+    return () => clearInterval(interval);
+  }, [isRunning, seconds]);
 
   const handleConfirm = () => {
     const padded = timeInput.padStart(6, "0");
@@ -99,14 +106,12 @@ function Timer({
               value={formatTimeInput(timeInput)}
               onKeyDown={(e) => {
                 if (e.key >= "0" && e.key <= "9") {
-                  // añadir número al final
                   setTimeInput((prev) => {
-                    const newValue = (prev + e.key).slice(-6); // máximo 6 dígitos
+                    const newValue = (prev + e.key).slice(-6);
                     return newValue;
                   });
                   e.preventDefault();
                 } else if (e.key === "Backspace") {
-                  // eliminar el último número
                   setTimeInput((prev) => prev.slice(0, -1));
                   e.preventDefault();
                 }
@@ -153,7 +158,6 @@ function Timer({
   );
 }
 
-/* estilos rápidos */
 const overlayStyle = {
   position: "fixed",
   inset: 0,
@@ -169,8 +173,8 @@ const timerBoxStyle = {
   padding: 12,
   borderRadius: 10,
   background: "transparent",
-  width: 300, // ancho fijo
-  height: 120, // alto fijo
+  width: 300,
+  height: 120,
 };
 
 const timeStyle = {
@@ -203,8 +207,8 @@ const extraWindowStyle = {
   background: "#eaddd7",
   width: 700,
   fontSize: 28,
-  outline: "none", // quita el borde de foco azul
-  boxShadow: "none", // quita cualquier sombra
+  outline: "none",
+  boxShadow: "none",
   padding: 20,
 };
 
@@ -224,8 +228,8 @@ const taskInputStyle = {
   textAlign: "center",
   background: "transparent",
   fontSize: 28,
-  outline: "none", // quita el borde de foco azul
-  boxShadow: "none", // quita cualquier sombra
+  outline: "none",
+  boxShadow: "none",
   border: "2px solid #2f2f2f",
   width: "30%",
 };

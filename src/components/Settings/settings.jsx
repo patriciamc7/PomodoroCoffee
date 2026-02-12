@@ -23,8 +23,8 @@ function Settings({ onOpenDrinkSelector, onOpenToDoList, onOpenTimerSetUp }) {
 }
 
 const settingsStyle = {
-  position: "fixed" /* fijo en la pantalla incluso al hacer scroll */,
-  right: "0" /* pegado al borde derecho */,
+  position: "fixed",
+  right: "0",
   padding: "20px",
   width: 400,
   height: 500,
@@ -32,8 +32,8 @@ const settingsStyle = {
   borderRadius: 28,
   background: "#eaddd7",
   fontSize: 28,
-  outline: "none", // quita el borde de foco azul
-  boxShadow: "none", // quita cualquier sombra
+  outline: "none",
+  boxShadow: "none",
   justifyItems: "right",
   paddingTop: 70,
 };
@@ -42,8 +42,8 @@ const buttonStyle = {
   border: "2px solid #2f2f2f",
   borderRadius: 8,
   background: "transparent",
-  outline: "none", // quita el borde de foco azul
-  boxShadow: "none", // quita cualquier sombra
+  outline: "none",
+  boxShadow: "none",
 };
 
 export default Settings;
