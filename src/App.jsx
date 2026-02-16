@@ -5,6 +5,7 @@ import Settings from "./components/Settings/settings";
 import DrinkSelector from "./components/Drinks/drinkselector";
 import ToDoList from "./components/Tasks/todolist";
 import Player from "./components/Audio/player";
+import AdBanner from "./components/Ads/adBanner";
 
 import coffee from "./assets/coffee.png";
 import tea from "./assets/tea.png";
@@ -19,6 +20,8 @@ import lofi2 from "./assets/sounds/lofi2.mp3";
 import lofi3 from "./assets/sounds/lofi3.mp3";
 import lofi4 from "./assets/sounds/lofi4.mp3";
 
+import settingsImage from "./assets/buttons/settings.png";
+
 function App() {
   const [background, setBackground] = useState(() => {
     return localStorage.getItem("drink") || "Strawberry Milk";
@@ -27,7 +30,7 @@ function App() {
   const [showOptions, setShowOptions] = useState(false);
   const [showDrinkSelector, setShowDrinkSelector] = useState(false);
   const [showToDoList, setShowToDoList] = useState(false);
-  const [showChangeSetUp, setChangeSetUp] = useState(false);
+  const [showChangeSetUp, setChangeSetUp] = useState(true);
 
   const [timerRunning, setTimerRunning] = useState(false);
 
@@ -59,16 +62,22 @@ function App() {
         margin: 0,
         padding: 0,
         height: "100vh",
-        backgroundImage: currentDrink ? `url(${currentDrink.image})` : none,
+        backgroundImage: currentDrink ? `url(${currentDrink.image})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         overflow: "hidden",
+
+        transition: "background-image 0.4s ease",
+
       }}
     >
       <div>
         <button style={optionStyle} onClick={handleClick}>
-          Options
+             <img
+              src={settingsImage}
+               alt="settings" 
+            ></img>
         </button>
       </div>
 
@@ -89,11 +98,10 @@ function App() {
         />
       )}
 
-      {showToDoList && <ToDoList />}
+      {showToDoList && <ToDoList onClose={() => setShowToDoList(false)}/>}
 
       <Timer
         showOptions={showOptions}
-        showToDoList={showToDoList}
         showDrinkSelector={showDrinkSelector}
         showChangeSetUp={showChangeSetUp}
         onSetUpEnded={() => setChangeSetUp(false)}
@@ -105,17 +113,19 @@ function App() {
           drinks={drinks}
           onClose={() => {
             setShowDrinkSelector(false);
-            setChangeSetUp(true);
+            if (!timerRunning) setChangeSetUp(true);
           }}
           onConfirm={(drinkId) => {
             setBackground(drinkId);
             setShowDrinkSelector(false);
-            setChangeSetUp(true);
+             if (!timerRunning) setChangeSetUp(true);
           }}
         />
       )}
 
       <Player tracks={tracks} running={timerRunning} />
+
+      {/* <AdBanner /> */}
     </div>
   );
 }
@@ -123,9 +133,8 @@ function App() {
 const optionStyle = {
   position: "fixed",
   right: "10px",
-  padding: "10px 10px",
   margin: "10px",
-  background: "transparent",
+  background: "#eaddd7cc",
   border: "2px solid #2f2f2f",
   borderRadius: 8,
   cursor: "pointer",

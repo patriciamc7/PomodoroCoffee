@@ -16,4 +16,5 @@ input, button, select, textarea {
   font-family: "Excalifont", sans-serif;
   outline: none;
   box-shadow: none; 
+  user-select: none;
 }

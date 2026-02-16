@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function ToDoList() {
+function ToDoList({onClose}) {
   const [tasks, setTasks] = useState([]);
   const [text, setText] = useState("");
 
@@ -23,8 +23,14 @@ function ToDoList() {
     setTasks(tasks.map((t) => (t.id === id ? { ...t, done: !t.done } : t)));
   };
 
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((t) => t.id !== id));
+  };
+
   return (
     <div style={toDoStyle}>
+      <button onClick={onClose} style={closeButton}>X</button>
+
       <h3 style={{ margin: 3, fontWeight: "normal" }}>To-Do List</h3>
 
       <div style={newTaskStyle}>
@@ -42,6 +48,10 @@ function ToDoList() {
       <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
         {tasks.map((t) => (
           <div key={t.id} style={todoRow}>
+            <button onClick={() => deleteTask(t.id)} style={deleteButtonStyle}>
+              X
+            </button>
+
             <div
               style={{
                 ...textStyle,
@@ -74,6 +84,22 @@ function ToDoList() {
     </div>
   );
 }
+const closeButton = {
+  width: 36,
+  margin: 5,
+  background: "transparent",
+  border: "none",
+  cursor: "pointer",
+};
+
+const deleteButtonStyle = {
+  width: 36,
+  height: 36,
+  borderRadius: 8,
+  border: "2px solid #2f2f2f",
+  background: "transparent",
+  cursor: "pointer"
+};
 
 const toDoStyle = {
   display: "flex",
@@ -114,11 +140,12 @@ const addTaskStyle = {
   alignItems: "center",
   justifyContent: "center",
   fontSize: 21,
+  cursor: "pointer",
 };
 
 const todoRow = {
   display: "grid",
-  gridTemplateColumns: "1fr auto",
+  gridTemplateColumns: "36px 1fr 36px",
   alignItems: "center",
   gap: 8,
   padding: "0 12px",
@@ -136,6 +163,7 @@ const tickButtonStyle = {
   alignItems: "center",
   justifyContent: "center",
   fontSize: 21,
+  cursor: "pointer",
 };
 
 const textStyle = {

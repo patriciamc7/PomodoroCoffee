@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
+import { useRef } from "react";
+import endSound from "../../assets/sounds/alarm.mp3";
 
 function Timer({
   showOptions,
-  showToDoList,
   showDrinkSelector,
   showChangeSetUp,
   onSetUpEnded,
   onRunningChange,
 }) {
+  const endAudioRef = useRef(null);
   const [seconds, setSeconds] = useState(() => {
     const saved = localStorage.getItem("timerSeconds");
     return saved ? Number(saved) : 0;
@@ -22,11 +24,13 @@ function Timer({
   const [timeInput, setTimeInput] = useState("");
   const [task, setTask] = useState("");
 
-  const shouldShowSetUp =
-    !showOptions &&
-    !showToDoList &&
-    !showDrinkSelector &&
-    (!isRunning || showChangeSetUp);
+  const shouldShowSetUp = !showOptions && !showDrinkSelector && showChangeSetUp;
+
+  useEffect(() => {
+    if (shouldShowSetUp && isRunning) {
+      setIsRunning(false);
+    }
+  }, [shouldShowSetUp]);
 
   const formatTime = (totalSeconds) => {
     const h = Math.floor(totalSeconds / 3600);
@@ -53,16 +57,13 @@ function Timer({
   }, [isRunning]);
 
   useEffect(() => {
-    if (!isRunning || seconds <= 0) {
-      setTimeInput("");
-      setTask("");
-      setIsRunning(false);
-      return;
-    }
+    if (!isRunning) return;
+    if (seconds <= 0) return;
 
     const interval = setInterval(() => {
       setSeconds((prev) => {
-        if (prev <= 0) {
+        if (prev <= 1) {
+          endAudioRef.current?.play().catch(() => {});
           setIsRunning(false);
           return 0;
         }
@@ -71,7 +72,7 @@ function Timer({
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [isRunning, seconds]);
+  }, [isRunning]);
 
   const handleConfirm = () => {
     const padded = timeInput.padStart(6, "0");
@@ -154,6 +155,8 @@ function Timer({
           <div style={timeStyle}>{formatTime(seconds)}</div>
         </div>
       }
+
+      <audio ref={endAudioRef} src={endSound} />
     </>
   );
 }
@@ -178,12 +181,12 @@ const timerBoxStyle = {
 };
 
 const timeStyle = {
+  background: "#eaddd7cc",
   border: "2px solid #2f2f2f",
   borderRadius: 28,
   padding: "10px 16px",
   fontSize: 58,
   fontWeight: "lighter",
-  background: "transparent",
   padding: 20,
 };
 
@@ -216,6 +219,7 @@ const inputStyle = {
   border: "2px solid #2f2f2f",
   borderRadius: 8,
   textAlign: "center",
+  alignItems: "center",
   background: "transparent",
   fontSize: 28,
   outline: "none", // quita el borde de foco azul
@@ -239,6 +243,7 @@ const confirmStyle = {
   border: "2px solid #2f2f2f",
   background: "transparent",
   fontSize: 20,
+  cursor: "pointer",
 };
 
 export default Timer;

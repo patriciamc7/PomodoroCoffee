@@ -1,4 +1,8 @@
 import { useEffect, useRef, useState } from "react";
+import prevButton from "../../assets/buttons/prev.png";
+import nextButton from "../../assets/buttons/next.png";
+import playButton from "../../assets/buttons/play.png";
+import pauseButton from "../../assets/buttons/pause.png";
 
 function Player({ tracks, running }) {
   const audioRef = useRef(null);
@@ -39,14 +43,37 @@ function Player({ tracks, running }) {
   return (
     <>
       <div style={playerStyle}>
-        <button onClick={prev} style={btnStyle}>
-          ⏮
+        <button
+          onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.92)")}
+          onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          onClick={prev}
+          style={btnStyle}
+        >
+          <img src={prevButton} alt="prev"></img>
         </button>
-        <button onClick={toggle} style={btnStyle}>
-          {playing ? "⏸" : "▶"}
+        <button
+          onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.92)")}
+          onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          onClick={toggle}
+          style={btnStyle}
+        >
+          <img
+            src={playing ? pauseButton : playButton}
+            alt={playing ? "pause" : "play"}
+            style={{
+              width: 32,
+              height: 32,
+              pointerEvents: "none", 
+            }}
+          />
         </button>
-        <button onClick={next} style={btnStyle}>
-          ⏭
+        <button
+          onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.92)")}
+          onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
+          onClick={next}
+          style={btnStyle}
+        >
+          <img src={nextButton} alt="next"></img>
         </button>
       </div>
 
@@ -62,7 +89,6 @@ const playerStyle = {
   transform: "translateX(-50%)",
   display: "flex",
   gap: 14,
-  padding: "8px 14px",
   border: "2px solid #2f2f2f",
   borderRadius: 14,
   background: "transparent",

@@ -44,6 +44,7 @@ const buttonStyle = {
   background: "transparent",
   outline: "none",
   boxShadow: "none",
+  cursor: "pointer"
 };
 
 export default Settings;

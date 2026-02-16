@@ -69,6 +69,7 @@ const closeButton = {
   right: 8,
   top: 8,
   background: "transparent",
+  cursor: "pointer"
 };
 
 const mainPart = {
@@ -83,6 +84,7 @@ const slideButton = {
   background: "transparent",
   border: "0",
   width: "40px",
+  cursor: "pointer"
 };
 
 const confirmButton = {
@@ -93,6 +95,7 @@ const confirmButton = {
   background: "transparent",
   borderRadius: 8,
   padding: 6,
+  cursor: "pointer"
 };
 
 export default DrinkSelector;
