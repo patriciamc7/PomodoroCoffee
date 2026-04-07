@@ -184,7 +184,6 @@ const timeStyle = {
   background: "#eaddd7cc",
   border: "2px solid #2f2f2f",
   borderRadius: 28,
-  padding: "10px 16px",
   fontSize: 58,
   fontWeight: "lighter",
   padding: 20,
