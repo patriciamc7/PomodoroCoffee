@@ -1,6 +1,6 @@
 ### [Pomodoro Coffee Web](https://pomodoro-coffee.vercel.app/)
 
-- Project made with react, to run it -> npm run dev
+- Pomodoro timer app built with React. UI assets designed and rendered in Blender. Project made with react, to run it -> npm run dev
 <table>
   <tr>
     <td><img src="/readme/Captura de pantalla 2026-03-26 095945.png" width="1904" height="887"></td>
